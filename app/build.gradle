@@ -43,6 +43,8 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    android.buildFeatures.dataBinding = true
 }
 
 dependencies {
@@ -63,4 +65,8 @@ dependencies {
 
     // Core with Ktx
     implementation "androidx.core:core-ktx:$version_core"
+
+    // retrofit and Scalar converter for the net
+    implementation "com.squareup.retrofit2:retrofit: $version_retrofit"
+    implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 }
