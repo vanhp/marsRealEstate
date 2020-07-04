@@ -15,9 +15,8 @@
  *
  */
 
-package com.example.android.marsrealestate.network
+package com.vanh.android.marsrealestate.network
 
-import androidx.annotation.StringRes
 import com.squareup.moshi.Json
 
 data class MarsProperty(

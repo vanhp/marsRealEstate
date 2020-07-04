@@ -15,13 +15,13 @@
  *
  */
 
-package com.example.android.marsrealestate.overview
+package com.vanh.android.marsrealestate.overview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.marsrealestate.network.MarsApi
-import com.example.android.marsrealestate.network.MarsProperty
+import com.vanh.android.marsrealestate.network.MarsApi
+import com.vanh.android.marsrealestate.network.MarsProperty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,11 +29,6 @@ import kotlinx.coroutines.launch
 //import okhttp3.Call
 //import okhttp3.Callback
 //import okhttp3.Response
-import java.net.CacheResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.lang.System.getProperty
 
 
 /**
@@ -45,12 +40,16 @@ class OverviewViewModel : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     // The internal MutableLiveData String that stores the status of the most recent request
-    private val _response = MutableLiveData<String>()
+    private val _status = MutableLiveData<String>()
+
 
     // The external immutable LiveData for the request status String
-    val response: LiveData<String>
-        get() = _response
+    val status: LiveData<String>
+        get() = _status
 
+    private var _property = MutableLiveData<MarsProperty>()
+    val property:LiveData<MarsProperty>
+        get() = _property
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
@@ -67,11 +66,12 @@ class OverviewViewModel : ViewModel() {
                 val getPropertiesDeferred = MarsApi.retrofitService.getProperties()
                 try{
                      val listResult = getPropertiesDeferred.await()
-                    _response.value = "Success: ${listResult.size} Mars Property retrieved"
+                        if(listResult.size>0) _property.value = listResult[0]
+                    _status.value = "Success: ${listResult.size} Mars Property retrieved"
                 }
-                catch ( e:Exception) {_response.value = "Failure:  ${e.message}"}
+                catch ( e:Exception) {_status.value = "Failure:  ${e.message}"}
             }
-            _response.value = "Set the Mars API Response here!"
+            _status.value = "Set the Mars API Response here!"
     }
     override fun onCleared() {
         super.onCleared()
