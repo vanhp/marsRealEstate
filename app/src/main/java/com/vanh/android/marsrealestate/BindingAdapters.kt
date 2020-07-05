@@ -17,6 +17,7 @@
 
 package com.vanh.android.marsrealestate
 
+import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.vanh.android.marsrealestate.network.MarsProperty
+import com.vanh.android.marsrealestate.overview.MarsApiStatus
 import com.vanh.android.marsrealestate.overview.PhotoGridAdapter
 
 @BindingAdapter("imageUrl")
@@ -43,5 +45,14 @@ fun bindRecycleView(recyclerView:RecyclerView,data:List<MarsProperty>?){
     val adapter = recyclerView.adapter as PhotoGridAdapter
     adapter.submitList(data)
 }
-
+@BindingAdapter("marsApiStatus")
+fun bindingStatus(statusImageView: ImageView,status:MarsApiStatus?){
+    when(status){
+        MarsApiStatus.LOADING ->{statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)}
+        MarsApiStatus.DONE ->{statusImageView.visibility = View.GONE}
+        MarsApiStatus.ERROR ->{statusImageView.visibility = View.VISIBLE
+        statusImageView.setImageResource(R.drawable.ic_connection_error)}
+    }
+}
 
