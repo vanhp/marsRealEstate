@@ -33,20 +33,20 @@
         tools:context="com.vanh.android.marsrealestate.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photo_grid"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:clipToPadding="false"
             android:padding="6dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="2"
-            android:id="@+id/photo_grid"
             app:listData="@{viewModel.properties}"
-            android:clipToPadding="false"
+            app:spanCount="3"
             tools:itemCount="16"
-            tools:listitem="@layout/grid_view_item"/>
+            tools:listitem="@layout/grid_view_item" />
 
          <ImageView
              android:id="@+id/status_image"
@@ -57,15 +57,6 @@
              app:layout_constraintRight_toRightOf="parent"
              app:layout_constraintTop_toTopOf="parent"
              app:marsApiStatus="@{viewModel.status}" />
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{viewModel.properties.imgSrcUrl}"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

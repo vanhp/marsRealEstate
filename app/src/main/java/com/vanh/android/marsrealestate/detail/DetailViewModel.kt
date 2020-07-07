@@ -17,12 +17,42 @@
 package com.vanh.android.marsrealestate.detail
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
+import android.net.wifi.WifiConfiguration.PairwiseCipher.strings
+import androidx.lifecycle.*
+import com.vanh.android.marsrealestate.R.*
 import com.vanh.android.marsrealestate.network.MarsProperty
 
 /**
  * The [ViewModel] that is associated with the [DetailFragment].
  */
-class DetailViewModel(@Suppress("UNUSED_PARAMETER")marsProperty: MarsProperty, app: Application) : AndroidViewModel(app) {
+//class DetailViewModel(@Suppress("UNUSED_PARAMETER")marsProperty: MarsProperty, app: Application)
+class DetailViewModel(marsProperty: MarsProperty, app: Application) : AndroidViewModel(app) {
+
+    private val _selectedProperty = MutableLiveData<MarsProperty>()
+    val selectedProperty: LiveData<MarsProperty>
+        get() = _selectedProperty
+
+    init {
+        _selectedProperty.value = marsProperty
+    }
+
+    val displayPropertyPrice = Transformations.map(selectedProperty){
+        app.applicationContext.getString(
+                when(it.isRental){
+                    true -> string.display_price_monthly_rental
+                    false -> string.display_price
+
+                },it.price
+        )
+    }
+    val displayPropertyType = Transformations.map(selectedProperty){
+        app.applicationContext.getString(string.display_type,
+                app.applicationContext.getString(
+                    when(it.isRental){
+                        true -> string.type_rent
+                        false -> string.type_sale
+                    }
+                )
+        )
+    }
 }
